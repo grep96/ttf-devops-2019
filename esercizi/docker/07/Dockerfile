@@ -1,4 +1,4 @@
 FROM alpine
 COPY invertimi.txt /app/
-ENTRYPOIN [“rev”]
+ENTRYPOINT [“rev”]
 CMD [“/app/invertimi.txt”]
