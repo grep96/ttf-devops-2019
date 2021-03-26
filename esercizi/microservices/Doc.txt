@@ -1,0 +1,36 @@
+Compose con tutti i servizi:
+docker-compose -f docker-compose-infrastructure.yml -f docker-compose-hex-service.yml -f docker-compose-rgb-service.yml -f docker-compose-hsl-service.yml -f docker-compose-cmyk-service.yml up -d
+
+che andrà eseguito nella radice del progetto:
+ttf-devops-2019\esercizi\microservices\
+
+docker-compose-infrastructure.yml contiene il reverse proxy
+I file sono nel formato: docker-compose-<nome-servizio>.yml e contengono quel certo servizio.
+
+I servizi hanno la seguente struttura, cioè il nome dell'endpoint per quella funzionalità è 
+nella relativa parentesi:
+cmyk-service:
+	- CMYK -> HEX (cmykToHEX)
+	- CMYK -> RGB (cmykToRGB)
+	- CMYK -> HSL (cmykToHSL)
+
+hex-service:
+	- HEX -> RGB (hexToRGB)
+	- HEX -> HSL (hexToHSL)
+	- HEX -> CMYK (hexToCMYK)
+
+hsl-service:
+	- HSL -> HEX (hslToHEX)
+	- HSL -> RGB (hslToRGB)
+	- HSL -> CMYK (hslToCMYK)	
+
+rgb-service:
+	- RGB -> HEX (rgbToHEX)
+	- RGB -> HSL (rgbToHSL)
+	- RGB -> CMYK (rgbToCMYK)
+
+Dopo aver effettuato il compose, le chiamate REST si trovano agli indirizzi con il formato:
+vagrantbox.local/<nome-servizio>/<funzione>?color=<colore>
+
+Un esempio:
+vagrantbox.local/cmyk-service/cmykToRGB?color={"cyan":0,"magenta":100,"yellow":75,"black":0}
